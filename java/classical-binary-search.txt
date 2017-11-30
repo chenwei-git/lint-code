@@ -1,0 +1,41 @@
+-- [457. 经典二分查找问题]
+-- 1. 描述
+在一个排序数组中找一个数，返回该数出现的任意位置，如果不存在，返回-1
+-- 1.1 样例
+给出数组 [1, 2, 2, 4, 5, 5].
+对于 target = 2, 返回 1 或者 2.
+对于 target = 5, 返回 4 或者 5.
+对于 target = 6, 返回 -1.
+
+-- 2. 代码
+public class Solution {
+    /*
+     * @param nums: An integer array sorted in ascending order
+     * @param target: An integer
+     * @return: An integer
+     */
+    public int findPosition(int[] nums, int target) {
+        // write your code here
+        return helper(nums, 0, nums.length-1, target);
+    }
+    
+    public int helper(int[] nums, int start, int end, int target) {
+        if (start < end) {
+            int index = (start + end) / 2;
+            if (nums[index] > target) {
+                return helper(nums, start, index - 1, target);
+            } else if (nums[index] < target) {
+                return helper(nums, index + 1, end, target);
+            } else {
+                return index;
+            }
+        } else if (start == end) {
+            if (nums[start] != target) {
+                return -1;
+            }
+            return start;
+        } else {
+            return -1;
+        }
+    }
+}
