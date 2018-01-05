@@ -1,0 +1,54 @@
+-- [快速排序]
+-- 1. 描述
+-- 2. 代码
+    public static void main(String[] args) {
+        // 对传入的数组排序
+        int[] array = new int[] { 7, 2, 1, 34, 2, 8, 2, 65 };
+        helper1(array);
+        System.out.println(Arrays.toString(array));
+    }
+
+    public static void helper1(int[] array) {
+        // 指定要排序的数组范围
+        helper2(array, 0, array.length - 1);
+    }
+
+    private static void helper2(int[] array, int start, int end) {
+        // 如果范围不合理停止
+        if (start >= end) {
+            return;
+        }
+        // 将指定范围的数组分成a和b两部分, a<b, 返回分隔点
+        int middle = helper3(array, start, end);
+        helper2(array, start, middle - 1);
+        helper2(array, middle + 1, end);
+    }
+
+    private static int helper3(int[] array, int start, int end) {
+        int temp = array[start];
+        for (; start < end;) {
+            for (; start < end && array[end] > temp;) {
+                end--;
+            }
+            if (start >= end) {
+                break;
+            }
+            array[start] = array[end];
+            start++;
+
+            if (start >= end) {
+                break;
+            }
+
+            for (; start < end && array[start] < temp;) {
+                start++;
+            }
+            if (start >= end) {
+                break;
+            }
+            array[end] = array[start];
+            end--;
+        }
+        array[start] = temp;
+        return start;
+    }
