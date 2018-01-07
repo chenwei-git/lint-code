@@ -1,0 +1,50 @@
+1. [423. 有效的括号序列]
+描述:
+给定一个字符串所表示的括号序列，包含以下字符： '(', ')', '{', '}', '[' and ']'， 判定是否是有效的括号序列。
+样例:
+括号必须依照 "()" 顺序表示， "()[]{}" 是有效的括号，但 "([)]"则是无效的括号。
+2. 代码
+public class Solution {
+    /*
+     * @param s: A string
+     * @return: whether the string is a valid parentheses
+     */
+    public boolean isValidParentheses(String s) {
+        // write your code here
+        return helper1(s);
+    }
+    private static boolean helper1(String s) {
+        if (s == null || s.isEmpty()) {
+            return true;
+        }
+        char[] array = s.toCharArray();
+        return helper2(array);
+    }
+
+    private static boolean helper2(char[] array) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : array) {
+            if (stack.isEmpty()) {
+                stack.push(c);
+                continue;
+            }
+            Character temp = stack.peek();
+            if (map.get(temp) != null && c == map.get(temp)) {
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static Map<Character, Character> map = new HashMap<Character, Character>() {
+        private static final long serialVersionUID = -1749477871357635882L;
+
+        {
+            put('{', '}');
+            put('[', ']');
+            put('(', ')');
+        }
+    };
+}
