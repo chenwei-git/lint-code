@@ -31,26 +31,27 @@ public class Solution {
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
         // write your code here
+        return helper1(head, n);
+    }
+
+    private ListNode helper1(ListNode head, int n) {
         if (n <= 0) {
             return null;
         }
-        
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        
-        ListNode preDelete = dummy;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i <= n - 1; i++) {
             if (head == null) {
                 return null;
             }
             head = head.next;
         }
+        ListNode deleteNode = dummy;
         while (head != null) {
             head = head.next;
-            preDelete = preDelete.next;
+            deleteNode = deleteNode.next;
         }
-        preDelete.next = preDelete.next.next;
+        deleteNode.next = deleteNode.next.next;
         return dummy.next;
-        
     }
 }
