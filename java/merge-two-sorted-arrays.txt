@@ -1,0 +1,57 @@
+1. [6. 合并排序数组]
+描述:
+合并两个排序的整数数组A和B变成一个新的数组。
+样例:
+给出A=[1,2,3,4]，B=[2,4,5,6]，返回 [1,2,2,3,4,4,5,6]
+
+挑战:
+你能否优化你的算法，如果其中一个数组很大而另一个数组很小？
+ 
+2. 代码
+public class Solution {
+    /*
+     * @param A: sorted integer array A
+     * @param B: sorted integer array B
+     * @return: A new sorted integer array
+     */
+    public int[] mergeSortedArray(int[] A, int[] B) {
+        // write your code here
+        return helper(A, B);
+    }
+    
+    private static int[] helper(int[] a, int[] b) {
+        if (a == null || a.length == 0) {
+            return b;
+        } else if (b == null || b.length == 0) {
+            return a;
+        }
+        int[] c = new int[a.length + b.length];
+        int n = 0;
+        int m = 0;
+        int i = 0;
+        if (a[a.length - 1] <= b[0]) {
+            for (; n < a.length;) {
+                c[i++] = a[n++];
+            }
+        } else if (b[b.length - 1] <= a[0]) {
+            for (; m < b.length;) {
+                c[i++] = b[m++];
+            }
+        }
+
+        while (n < a.length && m < b.length) {
+            if (a[n] <= b[m]) {
+                c[i++] = a[n++];
+            } else {
+                c[i++] = b[m++];
+            }
+        }
+        while (n < a.length) {
+            c[i++] = a[n++];
+        }
+        while (m < b.length) {
+            c[i++] = b[m++];
+        }
+        return c;
+    }
+}
