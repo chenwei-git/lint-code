@@ -1,0 +1,64 @@
+1. [453. 将二叉树拆成链表]
+描述:
+将一棵二叉树按照前序遍历拆解成为一个假链表。所谓的假链表是说，用二叉树的 right 指针，来表示链表中的 next 指针。
+样例:
+              1
+               \
+     1          2
+    / \          \
+   2   5    =>    3
+  / \   \          \
+ 3   4   6          4
+                     \
+                      5
+                       \
+                        6
+挑战:
+不使用额外的空间耗费。
+
+2. 代码
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+
+public class Solution {
+    /*
+     * @param root: a TreeNode, the root of the binary tree
+     * @return: 
+     */
+    public void flatten(TreeNode root) {
+        // write your code here
+        helper1(root);
+    }
+    
+    private static void helper1(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        // 1将当前节点变成假链表
+        // 1.1将左子数变成假链表
+        helper1(root.left);
+        // 1.2将右子树变成假链表
+        helper1(root.right);
+        // 1.3将右子树拼接到左字数的叶子节点
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        if (left == null) {
+            return;
+        }
+        while (left.right != null) {
+            left = left.right;
+        }
+        left.right = right;
+        root.right = root.left;
+        root.left = null;
+    }
+}
