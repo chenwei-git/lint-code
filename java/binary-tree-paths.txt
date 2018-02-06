@@ -1,0 +1,66 @@
+-+[1] 480. 二叉树的所有路径
+-+[1.1]描述
+给一棵二叉树，找出从根节点到叶子节点的所有路径。
+-+[1.2]样例
+给出下面这棵二叉树：
+   1
+ /   \
+2     3
+ \
+  5
+所有根到叶子的路径为：
+[
+  "1->2->5",
+  "1->3"
+]
+
+-+[2] 代码
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     * @param root the root of the binary tree
+     * @return all root-to-leaf paths
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        return helper1(root);
+    }
+
+    private static List<String> helper1(TreeNode root) {
+        if (root == null) {
+          return null;
+        }
+        // 返回左子树所有路径
+        List<String> leftList = helper1(root.left);
+        // 返回右子树所有路径
+        List<String> rightList = helper1(root.right);
+        
+        List<String> currList = new ArrayList<>();
+        if (leftList != null) {
+          for (String s : leftList) {
+            currList.add(root.val + "->" + s);
+          }
+        }
+        if (rightList != null) {
+          for (String s : rightList) {
+            currList.add(root.val + "->" + s);
+          }
+        }
+        if (currList.isEmpty()) {
+          currList.add(String.valueOf(root.val));
+        }
+        return currList;
+    }
+}
